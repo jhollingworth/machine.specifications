@@ -13,7 +13,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Specification Second;
     static Specification Last;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Linker = new NotImplementedSpecificationLinker();
 
@@ -40,30 +40,30 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
           );
       };
 
-    Because of = () => Linker.Visit(Report);
+    When of = () => Linker.Visit(Report);
 
-    It should_not_assign_a__previous__link_to_the_report =
+    Then should_not_assign_a__previous__link_to_the_report =
       () => Report.PreviousNotImplemented.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_report =
+    Then should_assign_a__next__link_to_the_report =
       () => Report.NextNotImplemented.ShouldEqual(First);
 
-    It should_assign_a__next__link_to_the_first_not_implemented_spec =
+    Then should_assign_a__next__link_to_the_first_not_implemented_spec =
       () => First.NextNotImplemented.ShouldEqual(Second);
 
-    It should_not_assign_a__previous__link_to_the_first_not_implemented_spec =
+    Then should_not_assign_a__previous__link_to_the_first_not_implemented_spec =
       () => First.PreviousNotImplemented.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_second_not_implemented_spec =
+    Then should_assign_a__next__link_to_the_second_not_implemented_spec =
       () => Second.NextNotImplemented.ShouldEqual(Last);
 
-    It should_assign_a__previous__link_to_the_second_not_implemented_spec =
+    Then should_assign_a__previous__link_to_the_second_not_implemented_spec =
       () => Second.PreviousNotImplemented.ShouldEqual(First);
 
-    It should_not_assign_a__next__link_to_the_last_not_implemented_spec =
+    Then should_not_assign_a__next__link_to_the_last_not_implemented_spec =
       () => Last.NextNotImplemented.ShouldBeNull();
 
-    It should_assign_a__previous__link_to_the_last_not_implemented_spec =
+    Then should_assign_a__previous__link_to_the_last_not_implemented_spec =
       () => Last.PreviousNotImplemented.ShouldEqual(Second);
   }
 }

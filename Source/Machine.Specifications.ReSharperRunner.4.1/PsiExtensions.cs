@@ -52,13 +52,13 @@ namespace Machine.Specifications.ReSharperRunner
 
     public static bool IsSpecification(this IDeclaredElement element)
     {
-      return element.IsValidFieldOfType(typeof(It));
+      return element.IsValidFieldOfType(typeof(Then));
     }
 
     public static bool IsSupportingField(this IDeclaredElement element)
     {
-      return element.IsValidFieldOfType(typeof(Establish)) ||
-             element.IsValidFieldOfType(typeof(Because)) ||
+      return element.IsValidFieldOfType(typeof(Given)) ||
+             element.IsValidFieldOfType(typeof(When)) ||
              element.IsValidFieldOfType(typeof(Cleanup));
     }
 

@@ -71,7 +71,7 @@ namespace Machine.Specifications.Explorers
     static bool HasSpecificationMembers(Type type)
     {
       return !type.IsAbstract &&
-             (type.GetInstanceFieldsOfType<It>().Any() ||
+             (type.GetInstanceFieldsOfType<Then>().Any() ||
               type.GetInstanceFieldsOfType(typeof(Behaves_like<>)).Any());
     }
 

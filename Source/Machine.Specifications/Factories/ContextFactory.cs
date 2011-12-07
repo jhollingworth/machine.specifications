@@ -22,7 +22,7 @@ namespace Machine.Specifications.Factories
 
     public Context CreateContextFrom(object instance, FieldInfo fieldInfo)
     {
-      if (fieldInfo.FieldType == typeof(It))
+      if (fieldInfo.FieldType == typeof(Then))
       {
         return CreateContextFrom(instance, new[] {fieldInfo});
       }
@@ -32,7 +32,7 @@ namespace Machine.Specifications.Factories
     public Context CreateContextFrom(object instance)
     {
       var type = instance.GetType();
-      var fieldInfos = type.GetInstanceFieldsOfType<It>()
+      var fieldInfos = type.GetInstanceFieldsOfType<Then>()
         .Union(type.GetInstanceFieldsOfType(typeof(Behaves_like<>)));
 
       return CreateContextFrom(instance, fieldInfos);
@@ -45,17 +45,17 @@ namespace Machine.Specifications.Factories
       var itFieldInfos = new List<FieldInfo>();
       var itShouldBehaveLikeFieldInfos = new List<FieldInfo>();
 
-      var contextClauses = ExtractPrivateFieldValues<Establish>(instance, true);
+      var contextClauses = ExtractPrivateFieldValues<Given>(instance, true);
       contextClauses.Reverse();
 
       var cleanupClauses = ExtractPrivateFieldValues<Cleanup>(instance, true);
 
-      var becauses = ExtractPrivateFieldValues<Because>(instance, false);
+      var becauses = ExtractPrivateFieldValues<When>(instance, false);
       becauses.Reverse();
 
       if (becauses.Count > _allowedNumberOfBecauseBlocks)
       {
-        var message = String.Format("There can only be one Because clause. Found {0} Becauses in the type hierarchy of {1}.",
+        var message = String.Format("There can only be one When clause. Found {0} Becauses in the type hierarchy of {1}.",
                                     becauses.Count,
                                     instance.GetType().FullName);
         throw new SpecificationUsageException(message);
@@ -79,7 +79,7 @@ namespace Machine.Specifications.Factories
       foreach (var info in fieldInfos)
       {
         if (acceptedSpecificationFields.Contains(info) &&
-            info.FieldType == typeof(It))
+            info.FieldType == typeof(Then))
         {
           itFieldInfos.Add(info);
         }

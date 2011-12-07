@@ -12,13 +12,13 @@ namespace Machine.Specifications.GallioAdapter.TestResources
     public static bool because = false;
     public static bool spec = false;
 
-    Establish context = () => 
+    Given context = () => 
       established = true;
 
-    Because action = () => 
+    When action = () => 
       because = true;
 
-    It should = () => 
+    Then should = () => 
       spec = true;    
   }
   
@@ -28,14 +28,14 @@ namespace Machine.Specifications.GallioAdapter.TestResources
     public static bool because = false;
     public static bool spec = false;
 
-    Establish context = () => 
+    Given context = () => 
       established = true;
 
-    Because action = () => 
+    When action = () => 
       because = true;
 
     [Ignore]
-    It should = () => 
+    Then should = () => 
       spec = true;
   }
 }

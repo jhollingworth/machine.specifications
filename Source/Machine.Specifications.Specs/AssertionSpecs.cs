@@ -9,11 +9,11 @@ namespace Machine.Specifications.Specs
     static Exception Exception;
     static int[] Ints;
 
-    Establish context = () => { Ints = new[] {1, 2, 3}; };
+    Given context = () => { Ints = new[] {1, 2, 3}; };
 
-    Because of = () => { Exception = Catch.Exception(() => Ints.ShouldContain(x => x > 3)); };
+    When of = () => { Exception = Catch.Exception(() => Ints.ShouldContain(x => x > 3)); };
 
-    It should_print_the_func_description =
+    Then should_print_the_func_description =
       () => Exception.Message.ShouldContain("Should contain elements conforming to: x => (x > 3)");
   }
 
@@ -23,14 +23,14 @@ namespace Machine.Specifications.Specs
     static Exception Exception;
     static int[] Ints;
 
-    Establish context = () => { Ints = new[] {1, 2, 3}; };
+    Given context = () => { Ints = new[] {1, 2, 3}; };
 
-    Because of = () => { Exception = Catch.Exception(() => Ints.ShouldNotContain(x => x < 3)); };
+    When of = () => { Exception = Catch.Exception(() => Ints.ShouldNotContain(x => x < 3)); };
 
-    It should_print_the_func_description =
+    Then should_print_the_func_description =
       () => Exception.Message.ShouldContain("No elements should conform to: x => (x < 3)");
 
-    It should_print_the_elements_that_did_not_match =
+    Then should_print_the_elements_that_did_not_match =
       () => Exception.Message.ShouldMatch(@"does contain: {\s+\[1\],\s+\[2\]\s+}");
   }
 
@@ -40,14 +40,14 @@ namespace Machine.Specifications.Specs
     static Exception Exception;
     static int[] Ints;
 
-    Establish context = () => { Ints = new[] {1, 2, 3}; };
+    Given context = () => { Ints = new[] {1, 2, 3}; };
 
-    Because of = () => { Exception = Catch.Exception(() => Ints.ShouldEachConformTo(x => x % 2 == 0)); };
+    When of = () => { Exception = Catch.Exception(() => Ints.ShouldEachConformTo(x => x % 2 == 0)); };
 
-    It should_print_the_func_description =
+    Then should_print_the_func_description =
       () => Exception.Message.ShouldContain("Should contain only elements conforming to: x => ((x % 2) = 0)");
 
-    It should_print_the_elements_that_did_not_match =
+    Then should_print_the_elements_that_did_not_match =
       () => Exception.Message.ShouldMatch(@"the following items did not meet the condition: {\s+\[1\],\s+\[3\]\s+}");
   }
 
@@ -59,17 +59,17 @@ namespace Machine.Specifications.Specs
     static List<string> AnotherList;
     static string Element;
 
-    Establish context = () =>
+    Given context = () =>
     {
       Element = "An Element";
       AList = new List<string> {Element};
       AnotherList = new List<string>(AList);
     };
 
-    Because of =
+    When of =
       () => SpecException = Catch.Exception(() => AList.ShouldContain(AnotherList));
 
-    It should_pass_the__ShouldContains__assertion =
+    Then should_pass_the__ShouldContains__assertion =
       () => SpecException.ShouldBeNull();
   }
 
@@ -82,7 +82,7 @@ namespace Machine.Specifications.Specs
     static string Element;
     static string AnotherElement;
 
-    Establish context = () =>
+    Given context = () =>
     {
       Element = "An Element";
       AList = new List<string> {Element};
@@ -91,10 +91,10 @@ namespace Machine.Specifications.Specs
       AnotherList = new List<string> {AnotherElement};
     };
 
-    Because of =
+    When of =
       () => SpecException = Catch.Exception(() => AList.ShouldContain(AnotherList));
 
-    It should_fail_the__ShouldContains__assertion =
+    Then should_fail_the__ShouldContains__assertion =
       () => SpecException.ShouldBeOfType<SpecificationException>();
   }
 
@@ -103,19 +103,19 @@ namespace Machine.Specifications.Specs
   {
     static string AString;
 
-    Establish context =
+    Given context =
       () => AString = null;
 
-    It should_fail_the__ShouldBeEmpty__assertion =
+    Then should_fail_the__ShouldBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldBeEmpty()).ShouldBeOfType<SpecificationException>();
 
-    It should_fail_the__ShouldNotBeEmpty__assertion =
+    Then should_fail_the__ShouldNotBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeEmpty()).ShouldBeOfType<SpecificationException>();
 
-    It should_pass_the__ShouldBeNull__assertion =
+    Then should_pass_the__ShouldBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldBeNull()).ShouldBeNull();
 
-    It should_fail_the__ShouldNotBeNull__assertion =
+    Then should_fail_the__ShouldNotBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeNull()).ShouldBeOfType<SpecificationException>();
   }
 
@@ -124,19 +124,19 @@ namespace Machine.Specifications.Specs
   {
     static string AString;
 
-    Establish context =
+    Given context =
       () => AString = "";
 
-    It should_pass_the__ShouldBeEmpty__assertion =
+    Then should_pass_the__ShouldBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldBeEmpty()).ShouldBeNull();
 
-    It should_fail_the__ShouldNotBeEmpty__assertion =
+    Then should_fail_the__ShouldNotBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeEmpty()).ShouldBeOfType<SpecificationException>();
 
-    It should_fail_the__ShouldBeNull__assertion =
+    Then should_fail_the__ShouldBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldBeNull()).ShouldBeOfType<SpecificationException>();
 
-    It should_pass_the__ShouldNotBeNull__assertion =
+    Then should_pass_the__ShouldNotBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeNull()).ShouldBeNull();
   }
 
@@ -145,19 +145,19 @@ namespace Machine.Specifications.Specs
   {
     static string AString;
 
-    Establish context =
+    Given context =
       () => AString = "hey";
 
-    It should_fail_the__ShouldBeEmpty__assertion =
+    Then should_fail_the__ShouldBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldBeEmpty()).ShouldBeOfType<SpecificationException>();
 
-    It should_pass_the__ShouldNotBeEmpty__assertion =
+    Then should_pass_the__ShouldNotBeEmpty__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeEmpty()).ShouldBeNull();
 
-    It should_fail_the__ShouldBeNull__assertion =
+    Then should_fail_the__ShouldBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldBeNull()).ShouldBeOfType<SpecificationException>();
 
-    It should_pass_the__ShouldNotBeNull__assertion =
+    Then should_pass_the__ShouldNotBeNull__assertion =
       () => Catch.Exception(() => AString.ShouldNotBeNull()).ShouldBeNull();
   }
 
@@ -167,12 +167,12 @@ namespace Machine.Specifications.Specs
     static string AString;
     static SpecificationException Exception;
 
-    Establish context = () => { AString = null; };
+    Given context = () => { AString = null; };
 
-    Because of =
+    When of =
       () => Exception = (SpecificationException) Catch.Exception(() => AString.ShouldBeOfType<int>());
 
-    It should_report_the_requested_type =
+    Then should_report_the_requested_type =
       () => Exception.Message.ShouldStartWith("Should be of type System.Int32");
   }
 }

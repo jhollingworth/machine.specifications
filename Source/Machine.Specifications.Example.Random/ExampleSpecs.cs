@@ -16,12 +16,12 @@ namespace Machine.Specifications.Specs
     public static int EstablishRunCount;
     public static int BecauseClauseRunCount;
 
-    Establish context = () => EstablishRunCount++;
+    Given context = () => EstablishRunCount++;
 
-    Because of = () => BecauseClauseRunCount++;
+    When of = () => BecauseClauseRunCount++;
 
-    It spec1 = () => { };
-    It spec2 = () => { };
+    Then spec1 = () => { };
+    Then spec2 = () => { };
   }
 
   [Tags(tag.example, "foobar")]
@@ -30,30 +30,30 @@ namespace Machine.Specifications.Specs
     public static int EstablishRunCount;
     public static int BecauseClauseRunCount;
 
-    Establish context = () => EstablishRunCount++;
+    Given context = () => EstablishRunCount++;
 
-    Because of = () => BecauseClauseRunCount++;
+    When of = () => BecauseClauseRunCount++;
 
-    It spec1 = () => { };
-    It spec2 = () => { };
+    Then spec1 = () => { };
+    Then spec2 = () => { };
   }
 
   [Tags(tag.example, tag.example)]
   [Tags(tag.example)]
   public class context_with_duplicate_tags
   {
-    It bla_bla = () => { };
+    Then bla_bla = () => { };
   }
 
   [Tags(tag.example, tag.some_other_tag, tag.one_more_tag)]
   public class context_with_tags
   {
-    It bla_bla = () => { };
+    Then bla_bla = () => { };
   }
 
   public class context_with_unimplemented_specs
   {
-    It should_be_unimplemented;
+    Then should_be_unimplemented;
   }
   
   [Ignore]
@@ -61,7 +61,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool IgnoredSpecRan;
 
-    It should_be_ignored = () =>
+    Then should_be_ignored = () =>
       IgnoredSpecRan = true;
   }
 
@@ -70,16 +70,16 @@ namespace Machine.Specifications.Specs
     public static bool IgnoredSpecRan;
 
     [Ignore]
-    It should_be_ignored = () =>
+    Then should_be_ignored = () =>
       IgnoredSpecRan = true;
   }
   
-  [Ignore("just because")]
+  [Ignore("just When")]
   public class context_with_ignore_and_reason : context_with_no_specs
   {
     public static bool IgnoredSpecRan;
 
-    It should_be_ignored = () =>
+    Then should_be_ignored = () =>
       IgnoredSpecRan = true;
   }
 
@@ -87,8 +87,8 @@ namespace Machine.Specifications.Specs
   {
     public static bool IgnoredSpecRan;
 
-    [Ignore("just because")]
-    It should_be_ignored = () =>
+    [Ignore("just When")]
+    Then should_be_ignored = () =>
       IgnoredSpecRan = true;
   }
 
@@ -98,7 +98,7 @@ namespace Machine.Specifications.Specs
     public static bool ContextEstablished;
     public static bool CleanupOccurred;
 
-    Establish context = () =>
+    Given context = () =>
     {
       ContextEstablished = true;
     };
@@ -122,50 +122,50 @@ namespace Machine.Specifications.Specs
   [Subject(typeof(int), "Parent description")]
   public class parent_context
   {
-    It should_be_able_to_assert_something = () =>
+    Then should_be_able_to_assert_something = () =>
       true.ShouldBeTrue();
 
     public class nested_context
     {
-      It should_be_able_to_assert_something_else = () =>
+      Then should_be_able_to_assert_something_else = () =>
         false.ShouldBeFalse();
     }
 
     public class nested_context_inheriting_another_concern : context_with_subject
     {
-      It should_be_able_to_assert_something_else = () =>
+      Then should_be_able_to_assert_something_else = () =>
         false.ShouldBeFalse();
     }
 
     [Subject(typeof(int), "Nested description")]
     public class nested_context_inheriting_and_owning_a_concern : context_with_subject
     {
-      It should_be_able_to_assert_something_else = () =>
+      Then should_be_able_to_assert_something_else = () =>
         false.ShouldBeFalse();
     }
   }
 
   public class parent_context_without_concern
   {
-    It should_be_able_to_assert_something = () =>
+    Then should_be_able_to_assert_something = () =>
       true.ShouldBeTrue();
 
     public class nested_context
     {
-      It should_be_able_to_assert_something_else = () =>
+      Then should_be_able_to_assert_something_else = () =>
         false.ShouldBeFalse();
     }
   }
 
   public class parent_context_that_has_its_own_because_block
   {
-    Because of = () =>
+    When of = () =>
     {
     };
 
     public class nested_context_that_has_a_because_block_which
     {
-      Because of = () =>
+      When of = () =>
       {
       };
     }
@@ -174,36 +174,36 @@ namespace Machine.Specifications.Specs
   [Tags(tag.example)]
   public class context_with_failing_specs
   {
-    It should = () => { throw new InvalidOperationException("something went wrong"); };
+    Then should = () => { throw new InvalidOperationException("something went wrong"); };
   }
 
   [Tags(tag.example)]
   public class context_with_failing_establish
   {
-    Establish context = () => { throw new InvalidOperationException("something went wrong"); };
-    It should = () => { };
+    Given context = () => { throw new InvalidOperationException("something went wrong"); };
+    Then should = () => { };
   }
 
   [Tags(tag.example)]
   public class context_with_failing_because
   {
-    Because of = () => { throw new InvalidOperationException("something went wrong"); };
-    It should = () => { };
+    When of = () => { throw new InvalidOperationException("something went wrong"); };
+    Then should = () => { };
   }
 
   [Tags(tag.example)]
   public class context_with_console_output
   {
-    Establish context = () =>
+    Given context = () =>
     {
-      Console.Out.WriteLine("Console.Out message in establish");
-      Console.Error.WriteLine("Console.Error message in establish");
+      Console.Out.WriteLine("Console.Out message in Given");
+      Console.Error.WriteLine("Console.Error message in Given");
     };
 
-    Because of = () =>
+    When of = () =>
     {
-      Console.Out.WriteLine("Console.Out message in because");
-      Console.Error.WriteLine("Console.Error message in because");
+      Console.Out.WriteLine("Console.Out message in When");
+      Console.Error.WriteLine("Console.Error message in When");
     };
 
     Cleanup after = () =>
@@ -212,13 +212,13 @@ namespace Machine.Specifications.Specs
       Console.Error.WriteLine("Console.Error message in cleanup");
     };
 
-    It should_log_messages = () =>
+    Then should_log_messages = () =>
     {
       Console.Out.WriteLine("Console.Out message in spec");
       Console.Error.WriteLine("Console.Error message in spec");
     };
 
-    It should_log_messages_also_for_the_nth_run = () =>
+    Then should_log_messages_also_for_the_nth_run = () =>
     {
       Console.Out.WriteLine("Console.Out message in spec");
       Console.Error.WriteLine("Console.Error message in spec");
@@ -228,7 +228,7 @@ namespace Machine.Specifications.Specs
   [Tags(tag.example)]
   public class context_with_inner_exception
   {
-    It should_throw = () =>
+    Then should_throw = () =>
     {
       try
       {
@@ -245,16 +245,16 @@ namespace Machine.Specifications.Specs
   [SetupForEachSpecification, Tags(tag.example)]
   public class context_with_console_output_and_for_each
   {
-    Establish context = () =>
+    Given context = () =>
     {
-      Console.Out.WriteLine("Console.Out message in establish");
-      Console.Error.WriteLine("Console.Error message in establish");
+      Console.Out.WriteLine("Console.Out message in Given");
+      Console.Error.WriteLine("Console.Error message in Given");
     };
 
-    Because of = () =>
+    When of = () =>
     {
-      Console.Out.WriteLine("Console.Out message in because");
-      Console.Error.WriteLine("Console.Error message in because");
+      Console.Out.WriteLine("Console.Out message in When");
+      Console.Error.WriteLine("Console.Error message in When");
     };
 
     Cleanup after_each = () =>
@@ -263,13 +263,13 @@ namespace Machine.Specifications.Specs
       Console.Error.WriteLine("Console.Error message in cleanup");
     };
 
-    It should_log_messages = () =>
+    Then should_log_messages = () =>
     {
       Console.Out.WriteLine("Console.Out message in spec");
       Console.Error.WriteLine("Console.Error message in spec");
     };
 
-    It should_log_messages_also_for_the_nth_run = () =>
+    Then should_log_messages_also_for_the_nth_run = () =>
     {
       Console.Out.WriteLine("Console.Out message in spec");
       Console.Error.WriteLine("Console.Error message in spec");
@@ -281,26 +281,26 @@ namespace Machine.Specifications.Specs
     [Tags(tag.example)]
     public class nested_context
     {
-      It should_be_run = () => { };
+      Then should_be_run = () => { };
     }
   }
 
   [Tags(tag.example)]
   public class context_with_public_It_field
   {
-    public It should;
+    public Then should;
   }
 
   [Tags(tag.example)]
   public class context_with_protected_It_field
   {
-    protected It should;
+    protected Then should;
   }
 
   [Tags(tag.example)]
   public class context_with_internal_It_field
   {
-    internal It should;
+    internal Then should;
   }
 
   [Tags(tag.example)]
@@ -312,12 +312,12 @@ namespace Machine.Specifications.Specs
   [Tags(tag.example)]
   public class context_with_nonprivate_framework_fields
   {
-    public Establish establish;
-    public Because because;
+    public Given Given;
+    public When When;
     public Cleanup cleanup;
 
     internal Behaves_like<Behaviors> behavior;
-    protected It specification;
-    It private_specification;
+    protected Then specification;
+    Then private_specification;
   }
 }

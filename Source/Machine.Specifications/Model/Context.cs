@@ -13,8 +13,8 @@ namespace Machine.Specifications.Model
     readonly object _instance;
 
     readonly Subject _subject;
-    readonly IEnumerable<Establish> _contextClauses;
-    readonly IEnumerable<Because> _becauseClauses;
+    readonly IEnumerable<Given> _contextClauses;
+    readonly IEnumerable<When> _becauseClauses;
 
     readonly IEnumerable<Cleanup> _cleanupClauses;
 
@@ -50,8 +50,8 @@ namespace Machine.Specifications.Model
 
     public Context(Type type,
                    object instance,
-                   IEnumerable<Establish> contextClauses,
-                   IEnumerable<Because> becauseClauses,
+                   IEnumerable<Given> contextClauses,
+                   IEnumerable<When> becauseClauses,
                    IEnumerable<Cleanup> cleanupClauses,
                    Subject subject,
                    bool isIgnored,

@@ -15,7 +15,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Specification Second;
     static Specification Last;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Linker = new FailedSpecificationLinker();
 
@@ -42,30 +42,30 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
           );
       };
 
-    Because of = () => Linker.Visit(Report);
+    When of = () => Linker.Visit(Report);
 
-    It should_not_assign_a__previous__link_to_the_report =
+    Then should_not_assign_a__previous__link_to_the_report =
       () => Report.PreviousFailed.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_report =
+    Then should_assign_a__next__link_to_the_report =
       () => Report.NextFailed.ShouldEqual(First);
 
-    It should_assign_a__next__link_to_the_first_failed_spec =
+    Then should_assign_a__next__link_to_the_first_failed_spec =
       () => First.NextFailed.ShouldEqual(Second);
 
-    It should_not_assign_a__previous__link_to_the_first_failed_spec =
+    Then should_not_assign_a__previous__link_to_the_first_failed_spec =
       () => First.PreviousFailed.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_second_failed_spec =
+    Then should_assign_a__next__link_to_the_second_failed_spec =
       () => Second.NextFailed.ShouldEqual(Last);
 
-    It should_assign_a__previous__link_to_the_second_failed_spec =
+    Then should_assign_a__previous__link_to_the_second_failed_spec =
       () => Second.PreviousFailed.ShouldEqual(First);
 
-    It should_not_assign_a__next__link_to_the_last_failed_spec =
+    Then should_not_assign_a__next__link_to_the_last_failed_spec =
       () => Last.NextFailed.ShouldBeNull();
 
-    It should_assign_a__previous__link_to_the_last_failed_spec =
+    Then should_assign_a__previous__link_to_the_last_failed_spec =
       () => Last.PreviousFailed.ShouldEqual(Second);
   }
 }

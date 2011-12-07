@@ -69,7 +69,7 @@ namespace Machine.Specifications.ReSharperRunner.Explorers
 #else
                                                           x.AssemblyName.Name,
 #endif
-                                                          typeof(It).Assembly.GetName().Name,
+                                                          typeof(Then).Assembly.GetName().Name,
                                                           StringComparison.InvariantCultureIgnoreCase)))
       {
         return;

@@ -32,7 +32,7 @@ namespace Machine.Specifications.Factories
                       behaviorInstance.GetType().HasAttribute<IgnoreAttribute>();
       var behavior = new Behavior(behaviorInstance, context, isIgnored);
 
-      var itFieldInfos = behaviorType.GetInstanceFieldsOfType<It>();
+      var itFieldInfos = behaviorType.GetInstanceFieldsOfType<Then>();
       CreateBehaviorSpecifications(itFieldInfos, behavior);
 
       return behavior;
@@ -50,15 +50,15 @@ namespace Machine.Specifications.Factories
 
     static void EnsureBehaviorDoesNotHaveFrameworkFieldsExceptIt(Type behaviorType)
     {
-      if (behaviorType.GetInstanceFieldsOfType<Establish>().Any())
+      if (behaviorType.GetInstanceFieldsOfType<Given>().Any())
       {
-        throw new SpecificationUsageException("You cannot have Establishs on Behaviors. Establish found in " +
+        throw new SpecificationUsageException("You cannot have Establishs on Behaviors. Given found in " +
                                               behaviorType.FullName);
       }
 
-      if (behaviorType.GetInstanceFieldsOfType<Because>().Any())
+      if (behaviorType.GetInstanceFieldsOfType<When>().Any())
       {
-        throw new SpecificationUsageException("You cannot have Becauses on Behaviors. Because found in " +
+        throw new SpecificationUsageException("You cannot have Becauses on Behaviors. When found in " +
                                               behaviorType.FullName);
       }
 

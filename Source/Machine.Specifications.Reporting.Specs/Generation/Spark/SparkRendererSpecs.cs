@@ -18,7 +18,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static SparkRenderer Renderer;
     static StringWriter Writer;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Writer = new StringWriter();
 
@@ -27,11 +27,11 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
         Renderer = new SparkRenderer();
       };
 
-    Because of = () => Renderer.Render(Run, Writer);
+    When of = () => Renderer.Render(Run, Writer);
 
     Cleanup after = () => Writer.Dispose();
 
-    It should_create_a_report =
+    Then should_create_a_report =
       () => Writer.ToString().ShouldNotBeEmpty();
   }
 
@@ -43,7 +43,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static StringWriter Writer;
     static string Html;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Writer = new StringWriter();
 
@@ -110,7 +110,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
         Renderer = new SparkRenderer();
       };
 
-    Because of = () =>
+    When of = () =>
       {
         Renderer.Render(Report, Writer);
         Html = Writer.ToString();
@@ -118,10 +118,10 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
 
     Cleanup after = () => Writer.Dispose();
 
-    It should_create_a_report =
+    Then should_create_a_report =
       () => Html.ShouldNotBeEmpty();
 
-    It should_order_assemblies_by_assembly_name =
+    Then should_order_assemblies_by_assembly_name =
       () =>
         {
           var assembly1 = Html.IndexOf("assembly 1");
@@ -130,7 +130,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
           assembly1.ShouldBeLessThan(assembly2);
         };
 
-    It should_order_concerns_by_name =
+    Then should_order_concerns_by_name =
       () =>
         {
           var assembly1Concern1 = Html.IndexOf("a 1 concern 1");
@@ -139,7 +139,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
           assembly1Concern1.ShouldBeLessThan(assembly2Concern1);
         };
 
-    It should_order_concerns_inside_assemblies_by_name =
+    Then should_order_concerns_inside_assemblies_by_name =
       () =>
         {
           var assembly1Concern1 = Html.IndexOf("a 1 concern 1");
@@ -148,7 +148,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
           assembly1Concern1.ShouldBeLessThan(assembly1Concern2);
         };
 
-    It should_order_contexts_by_name =
+    Then should_order_contexts_by_name =
       () =>
         {
           var context1 = Html.IndexOf("a 1 c 1 context 1");
@@ -157,7 +157,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
           context1.ShouldBeLessThan(context2);
         };
 
-    It should_order_specifications_in_the_order_they_were_executed =
+    Then should_order_specifications_in_the_order_they_were_executed =
       () =>
         {
           var spec1 = Html.IndexOf("a 1 c 1 c 1 specification 2");

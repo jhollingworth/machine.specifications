@@ -7,6 +7,6 @@ namespace Machine.Specifications.Example.BindingFailure
   {
     Referenced _referenced;
 
-    It will_fail = ()=> { };
+    Then will_fail = ()=> { };
   }
 }

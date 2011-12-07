@@ -21,12 +21,12 @@ namespace Machine.Specifications.ReSharperRunner
                                                                              IsContextBase);
 
     public static readonly IElementKind Specification = new MSpecElementNaming("Machine.Specifications_Specification",
-                                                                               "Machine.Specifications specification (field of type It)",
+                                                                               "Machine.Specifications specification (field of type Then)",
                                                                                IsSpecification);
 
     public static readonly IElementKind SupportingField =
       new MSpecElementNaming("Machine.Specifications_SupportingField",
-                             "Machine.Specifications supporting field (Establish, Because, Cleanup)",
+                             "Machine.Specifications supporting field (Given, When, Cleanup)",
                              IsSupportingField);
 
     public static readonly IElementKind Fields = new MSpecElementNaming("Machine.Specifications_Field",

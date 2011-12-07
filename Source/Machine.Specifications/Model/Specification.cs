@@ -9,7 +9,7 @@ namespace Machine.Specifications.Model
   public class Specification
   {
     readonly string _name;
-    readonly It _it;
+    readonly Then _then;
     readonly bool _isIgnored;
     readonly FieldInfo _fieldInfo;
 
@@ -28,10 +28,10 @@ namespace Machine.Specifications.Model
       get { return _isIgnored; }
     }
 
-    public Specification(string name, It it, bool isIgnored, FieldInfo fieldInfo)
+    public Specification(string name, Then then, bool isIgnored, FieldInfo fieldInfo)
     {
       _name = name;
-      _it = it;
+      _then = then;
       _isIgnored = isIgnored;
       _fieldInfo = fieldInfo;
     }
@@ -62,7 +62,7 @@ namespace Machine.Specifications.Model
 
     public bool IsDefined
     {
-      get { return _it != null; }
+      get { return _then != null; }
     }
 
     public bool IsExecutable
@@ -72,7 +72,7 @@ namespace Machine.Specifications.Model
 
     protected virtual void InvokeSpecificationField()
     {
-      _it.Invoke();
+      _then.Invoke();
     }
   }
 }

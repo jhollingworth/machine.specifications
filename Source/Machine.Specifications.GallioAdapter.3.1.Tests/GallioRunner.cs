@@ -14,7 +14,7 @@ namespace Machine.Specifications.GallioAdapter.Tests
   /// </summary>
   /// <remarks>
   /// I have opted to add some caching to this class so that tests are only executed by the runner once.
-  /// It will also execute the entire assembly at once which should be acceptable in most cases.
+  /// Then will also execute the entire assembly at once which should be acceptable in most cases.
   /// </remarks>
   public class GallioRunner
   {

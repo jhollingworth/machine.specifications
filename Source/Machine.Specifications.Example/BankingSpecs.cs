@@ -6,13 +6,13 @@ namespace Machine.Specifications.Example
   public class when_transferring_between_two_accounts
     : AccountSpecs
   {
-    Because of = () =>
+    When of = () =>
       fromAccount.Transfer(1m, toAccount);
 
-    It should_debit_the_from_account_by_the_amount_transferred = () =>
+    Then should_debit_the_from_account_by_the_amount_transferred = () =>
       fromAccount.Balance.ShouldEqual(0m);
 
-    It should_credit_the_to_account_by_the_amount_transferred = () =>
+    Then should_credit_the_to_account_by_the_amount_transferred = () =>
       toAccount.Balance.ShouldEqual(2m);
   }
 
@@ -21,10 +21,10 @@ namespace Machine.Specifications.Example
     : AccountSpecs
   {
     static Exception exception;
-    Because of =()=>
+    When of =()=>
       exception = Catch.Exception(()=>fromAccount.Transfer(2m, toAccount));
 
-    It should_not_allow_the_transfer =()=>
+    Then should_not_allow_the_transfer =()=>
       exception.ShouldBeOfType<Exception>();
   }
 
@@ -35,7 +35,7 @@ namespace Machine.Specifications.Example
     protected static Account fromAccount;
     protected static Account toAccount;
 
-    Establish context =()=>
+    Given context =()=>
     {
       fromAccount = new Account {Balance = 1m};
       toAccount = new Account {Balance = 1m};

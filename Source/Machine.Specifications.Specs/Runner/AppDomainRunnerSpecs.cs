@@ -14,7 +14,7 @@ namespace Machine.Specifications.Specs.Runner
     public static TestListener listener;
     public static AppDomainRunner runner;
 
-    Establish context = () =>
+    Given context = () =>
     {
       listener = new TestListener();
       runner = new AppDomainRunner(listener, RunOptions.Default);
@@ -23,10 +23,10 @@ namespace Machine.Specifications.Specs.Runner
 
   public class when_running_specs_by_assembly : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunAssembly(typeof(Account).Assembly);
 
-    It should_run_them_all = () =>
+    Then should_run_them_all = () =>
       listener.SpecCount.ShouldEqual(6);
   }
 
@@ -36,7 +36,7 @@ namespace Machine.Specifications.Specs.Runner
     readonly static string SpecAssembly = GetPath("Machine.Specifications.Example.BindingFailure.dll");
     readonly static string ReferencedAssembly = GetPath("Machine.Specifications.Example.BindingFailure.Ref.dll");
 
-    Establish context = () =>
+    Given context = () =>
     {
       if (File.Exists(ReferencedAssembly))
       {
@@ -44,10 +44,10 @@ namespace Machine.Specifications.Specs.Runner
       }
     };
 
-    Because of = () =>
+    When of = () =>
 	  runner.RunAssembly(Assembly.LoadFrom(SpecAssembly));
 
-    It should_fail = () =>
+    Then should_fail = () =>
       listener.LastFatalError.ShouldNotBeNull();
     //Exception.ShouldBeOfType<TargetInvocationException>();
 
@@ -61,47 +61,47 @@ namespace Machine.Specifications.Specs.Runner
   [Ignore]
   public class when_running_specs_in_which_the_cleanup_throws_a_non_serializable_exception : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunAssembly(typeof(cleanup_failure).Assembly);
 
-    It should_cause_a_fatal_error = () =>
+    Then should_cause_a_fatal_error = () =>
       listener.LastFatalError.ShouldNotBeNull();
 
   }
 
   public class when_running_specs_by_namespace : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunNamespace(typeof(Account).Assembly, "Machine.Specifications.Example");
 
-    It should_run_them_all = () =>
+    Then should_run_them_all = () =>
       listener.SpecCount.ShouldEqual(6);
   }
 
   public class when_running_specs_by_member : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunMember(typeof(Account).Assembly, typeof(when_transferring_an_amount_larger_than_the_balance_of_the_from_account).GetField("should_not_allow_the_transfer", BindingFlags.NonPublic | BindingFlags.Instance));
 
-    It should_run = () =>
+    Then should_run = () =>
       listener.SpecCount.ShouldEqual(1);
   }
 
   public class when_running_a_nested_context_by_member : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunMember(typeof(Container).Assembly, typeof(Container.nested_context));
 
-    It should_run = () =>
+    Then should_run = () =>
       listener.SpecCount.ShouldEqual(1);
   }
   
   public class when_running_specs_of_a_nested_context_by_member : running_specs
   {
-    Because of = () =>
+    When of = () =>
       runner.RunMember(typeof(Container).Assembly, typeof(Container.nested_context).GetField("should_be_run", BindingFlags.NonPublic | BindingFlags.Instance));
 
-    It should_run = () =>
+    Then should_run = () =>
       listener.SpecCount.ShouldEqual(1);
   }
 

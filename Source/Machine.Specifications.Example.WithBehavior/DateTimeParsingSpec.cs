@@ -9,9 +9,9 @@ namespace Machine.Specifications.Example.WithBehavior
   [Subject("Date time parsing")]
   public class when_a_date_is_parsed_with_the_regular_expression_parser : DateTimeParsingSpecs
   {
-    Establish context = () => { Parser = new RegexParser(); };
+    Given context = () => { Parser = new RegexParser(); };
 
-    Because of = () => { ParsedDate = Parser.Parse("2009/01/21"); };
+    When of = () => { ParsedDate = Parser.Parse("2009/01/21"); };
 
     Behaves_like<DateTimeParsingBehavior> a_date_time_parser;
   }
@@ -19,9 +19,9 @@ namespace Machine.Specifications.Example.WithBehavior
   [Subject("Date time parsing")]
   public class when_a_date_is_parsed_by_the_infrastructure : DateTimeParsingSpecs
   {
-    Establish context = () => { Parser = new InfrastructureParser(); };
+    Given context = () => { Parser = new InfrastructureParser(); };
 
-    Because of = () => { ParsedDate = Parser.Parse("2009/01/21"); };
+    When of = () => { ParsedDate = Parser.Parse("2009/01/21"); };
 
     Behaves_like<DateTimeParsingBehavior> a_date_time_parser;
   }
@@ -37,6 +37,6 @@ namespace Machine.Specifications.Example.WithBehavior
   {
     protected static DateTime ParsedDate;
 
-    It should_parse_the_expected_date = () => ParsedDate.ShouldEqual(new DateTime(2009, 1, 21));
+    Then should_parse_the_expected_date = () => ParsedDate.ShouldEqual(new DateTime(2009, 1, 21));
   }
 }

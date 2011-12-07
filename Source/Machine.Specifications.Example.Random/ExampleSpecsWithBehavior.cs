@@ -5,7 +5,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<Behaviors> behavior;
   }
 
@@ -20,7 +20,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
 
     [Ignore]
     Behaves_like<Behaviors> behavior;
@@ -31,7 +31,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<IgnoredBehaviors> behavior;
   }
 
@@ -40,7 +40,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithIgnoredSpec> behavior;
   }
 
@@ -49,7 +49,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithNestedBehavior> behavior_with_nested_behavior;
   }
   
@@ -58,7 +58,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithoutBehaviorsAttribute> behavior_without_behavior_attribute;
   }
   
@@ -67,7 +67,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithEstablish> behavior_with_establish;
   }
   
@@ -76,7 +76,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
 
-    It should_run = () => LocalSpecRan = true;
+    Then should_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithBecause> behavior_with_because;
   }
 
@@ -85,7 +85,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool LocalSpecRan;
     
-    It should_not_run = () => LocalSpecRan = true;
+    Then should_not_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithProtectedFields> behavior_with_protected_fields;
   }
 
@@ -95,7 +95,7 @@ namespace Machine.Specifications.Specs
     public static bool LocalSpecRan;
     protected static bool fieldThatShouldBeCopiedOverFromContext;
 
-    It should_not_run = () => LocalSpecRan = true;
+    Then should_not_run = () => LocalSpecRan = true;
     Behaves_like<BehaviorsWithProtectedFields> behavior_with_protected_fields;
   }
 
@@ -104,7 +104,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool BehaviorSpecRan;
 
-    It should_run_if_behavior_is_not_ignored = () => BehaviorSpecRan = true;
+    Then should_run_if_behavior_is_not_ignored = () => BehaviorSpecRan = true;
   }
   
   [Ignore]
@@ -113,7 +113,7 @@ namespace Machine.Specifications.Specs
   {
     public static bool BehaviorSpecRan;
 
-    It should_not_run = () => BehaviorSpecRan = true;
+    Then should_not_run = () => BehaviorSpecRan = true;
   }
 
   [Behaviors]
@@ -122,7 +122,7 @@ namespace Machine.Specifications.Specs
     public static bool BehaviorSpecRan;
 
     [Ignore]
-    It should_not_run = () => BehaviorSpecRan = true;
+    Then should_not_run = () => BehaviorSpecRan = true;
   }
 
   [Behaviors]
@@ -135,19 +135,19 @@ namespace Machine.Specifications.Specs
   {
     public static bool BehaviorSpecRan;
 
-    It should_not_run = () => BehaviorSpecRan = true;
+    Then should_not_run = () => BehaviorSpecRan = true;
   }
 
   [Behaviors]
   public class BehaviorsWithEstablish
   {
-    Establish context;
+    Given context;
   }
   
   [Behaviors]
   public class BehaviorsWithBecause
   {
-    Because of;
+    When of;
   }
 
   [Behaviors]
@@ -156,6 +156,6 @@ namespace Machine.Specifications.Specs
     public static bool BehaviorSpecRan;
     protected static int fieldThatShouldBeCopiedOverFromContext;
 
-    It should_not_run = () => BehaviorSpecRan = true;
+    Then should_not_run = () => BehaviorSpecRan = true;
   }
 }

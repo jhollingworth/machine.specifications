@@ -30,7 +30,7 @@ namespace Machine.Specifications.ReSharperRunner
 
     public static IEnumerable<IMetadataField> GetSpecifications(this IMetadataTypeInfo type)
     {
-      return type.GetPrivateFieldsOfType<It>();
+      return type.GetPrivateFieldsOfType<Then>();
     }
 
     public static IEnumerable<IMetadataField> GetBehaviors(this IMetadataTypeInfo type)

@@ -28,13 +28,13 @@ namespace Machine.Specifications.GallioAdapter.TestResources
     /// <summary>
     /// A passing specification.
     /// </summary>
-    It pass = () => 
+    Then pass = () => 
       true.ShouldBeTrue();
 
     /// <summary>
     /// A failing specification.
     /// </summary>
-    It fail = () => 
+    Then fail = () => 
       true.ShouldBeFalse();         
   }
 }

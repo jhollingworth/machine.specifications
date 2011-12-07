@@ -14,12 +14,12 @@ namespace Machine.Specifications.Specs.Utility.Internal
 
 		static Exception Exception;
 
-		Because of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
+		When of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
 
-		It should_report_a_styled_exception_message =
+		Then should_report_a_styled_exception_message =
 			() => Exception.Message.ShouldEqual(ExpectedMessage);
 
-		It should_be_a_specification_exception =
+		Then should_be_a_specification_exception =
 			() => Exception.ShouldBeOfType<SpecificationException>();
 
 		const string Expected =
@@ -39,9 +39,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 			"  But was:  \"Hello\"" + Environment.NewLine +
 			"  ----------------^";
 
-		Because of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
+		When of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
 
-		It should_report_the_expected_message =
+		Then should_report_the_expected_message =
 			() => ActualMessage.ShouldEqual(ExpectedMessage);
 
 		const string Expected = "Hello world!";
@@ -58,9 +58,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 			"  But was:  \"Hello world!\"" + Environment.NewLine +
 			"  -----------------^";
 
-		Because of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
+		When of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
 
-		It should_report_the_expected_message =
+		Then should_report_the_expected_message =
 			() => ActualMessage.ShouldEqual(ExpectedMessage);
 
 		const string Actual = "Hello world!";
@@ -77,9 +77,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 			"  But was:  \"Bello world!\"" + Environment.NewLine +
 			"  -----------^";
 
-		Because of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
+		When of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
 
-		It should_report_the_expected_message =
+		Then should_report_the_expected_message =
 			() => ActualMessage.ShouldEqual(ExpectedMessage);
 
 		const string Actual = "Bello world!";
@@ -89,9 +89,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 	public class when_comparing_a_string_and_null
 	{
 		static string ActualMessage;
-		Because of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
+		When of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
 
-		It should_report_a_formatted_message =
+		Then should_report_a_formatted_message =
 			() => ActualMessage.ShouldEqual("  Expected: [null]" + Environment.NewLine + "  But was:  \"Hello world!\"");
 
 		const string Actual = "Hello world!";
@@ -103,15 +103,15 @@ namespace Machine.Specifications.Specs.Utility.Internal
 		static string ActualMessage;
 		static CultureInfo Culture;
 
-		Establish context = () =>
+		Given context = () =>
 		{
 			Culture = Thread.CurrentThread.CurrentCulture;
 			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 		};
 
-		Because of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
+		When of = () => { ActualMessage = Catch.Exception(() => Actual.ShouldEqual(Expected)).Message; };
 
-		It should_report_a_formatted_message =
+		Then should_report_a_formatted_message =
 			() => ActualMessage.ShouldEqual("  Expected: [4.5578]" + Environment.NewLine + "  But was:  [4.5568]");
 
 		Cleanup after = () => Thread.CurrentThread.CurrentCulture = Culture;
@@ -130,9 +130,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 
 		static Exception Exception;
 
-		Because of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
+		When of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
 
-		It should_report_a_styled_exception_message =
+		Then should_report_a_styled_exception_message =
 			() => Exception.Message.ShouldEqual(ExpectedMessage);
 
 		const string Actual =
@@ -152,9 +152,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 
 		static Exception Exception;
 
-		Because of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
+		When of = () => { Exception = Catch.Exception(() => Actual.ShouldEqual(Expected)); };
 
-		It should_report_a_styled_exception_message =
+		Then should_report_a_styled_exception_message =
 			() => Exception.Message.ShouldEqual(ExpectedMessage);
 
 		const string Actual =
@@ -174,9 +174,9 @@ namespace Machine.Specifications.Specs.Utility.Internal
 
     static Exception Exception;
 
-    Because of = () =>  { Exception = Catch.Exception(() => "1.00".ShouldEqual("1.0")); };
+    When of = () =>  { Exception = Catch.Exception(() => "1.00".ShouldEqual("1.0")); };
 
-    It should_report_a_styled_exception_message =
+    Then should_report_a_styled_exception_message =
       () => Exception.Message.ShouldEqual(ExpectedMessage);
   }
 }

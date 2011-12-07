@@ -6,9 +6,9 @@ namespace Machine.Specifications.Example.Clr4
 	{
 		static ExpandoObject ExpandoObject;
 
-		Because of = () => { ExpandoObject = new ExpandoObject(); };
+		When of = () => { ExpandoObject = new ExpandoObject(); };
 
-		It should_be_able_to_use_components_that_are_available_in_the_target_framework =
+		Then should_be_able_to_use_components_that_are_available_in_the_target_framework =
 			() => ExpandoObject.ShouldNotBeNull();
 	}
 }

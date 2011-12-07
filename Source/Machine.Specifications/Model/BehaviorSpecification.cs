@@ -12,12 +12,12 @@ namespace Machine.Specifications.Model
     readonly ConventionMapper _mapper;
 
     public BehaviorSpecification(string name,
-                                 It it,
+                                 Then then,
                                  bool isIgnored,
                                  FieldInfo fieldInfo,
                                  Context context,
                                  Behavior behavior)
-      : base(name, it, isIgnored, fieldInfo)
+      : base(name, then, isIgnored, fieldInfo)
     {
       _contextInstance = context.Instance;
       _behaviorInstance = behavior.Instance;

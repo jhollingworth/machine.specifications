@@ -11,12 +11,12 @@ namespace Machine.Specifications.Specs.Explorers
   {
     static AssemblyExplorer Explorer;
     static IEnumerable<Context> Contexts;
-    Establish context = () => { Explorer = new AssemblyExplorer(); };
+    Given context = () => { Explorer = new AssemblyExplorer(); };
 
-    Because of =
+    When of =
       () => { Contexts = Explorer.FindContextsIn(typeof(tag).Assembly, "Machine.Specifications.Specs.Internal"); };
 
-    It should_find_two_contexts =
+    Then should_find_two_contexts =
       () => Contexts.Count().ShouldEqual(2);
   }
 }

@@ -17,7 +17,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Run Report;
     static Func<string> ResourcePathCreator;
 
-    Establish context = () =>
+    Given context = () =>
     {
       ResourcePathCreator = MockRepository.GenerateStub<Func<string>>();
 
@@ -33,9 +33,9 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
                      ));
     };
 
-    Because of = () => Preparation.Visit(Report);
+    When of = () => Preparation.Visit(Report);
 
-    It should_not_create_the_folder_for_supplements =
+    Then should_not_create_the_folder_for_supplements =
       () => ResourcePathCreator.AssertWasNotCalled(x => x());
   }
 
@@ -48,7 +48,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Run Report;
     static Specification Texts;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Preparation = new FileBasedResultSupplementPreparation(MockRepository.GenerateStub<IFileSystem>());
         Preparation.Initialize(new VisitorContext { ResourcePathCreator = () => @"C:\report\resources" });
@@ -98,15 +98,15 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
                                               Spec("a 2 c 1 c 2 specification 2", Result.Pass())))));
       };
 
-    Because of = () => Preparation.Visit(Report);
+    When of = () => Preparation.Visit(Report);
 
-    It should_copy_all_image_files_to_the_report_resource_directory =
+    Then should_copy_all_image_files_to_the_report_resource_directory =
       () => Images.Supplements.Values.Each(v => v.Values.Each(f => f.ShouldStartWith(@"C:\report\resources\")));
 
-    It should_copy_all_HTML_files_to_the_report_resource_directory =
+    Then should_copy_all_HTML_files_to_the_report_resource_directory =
       () => HtmlFiles.Supplements.Values.Each(v => v.Values.Each(f => f.ShouldStartWith(@"C:\report\resources\")));
 
-    It should_not_alter_text_supplements =
+    Then should_not_alter_text_supplements =
       () => Texts.Supplements.Values.Each(v => v.Values.Each(f => f.ShouldEqual("text")));
   }
 
@@ -118,7 +118,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Run Report;
     static IDictionary<string, string> FirstSupplement;
 
-    Establish context = () =>
+    Given context = () =>
       {
         var fileSystem = MockRepository.GenerateStub<IFileSystem>();
         fileSystem
@@ -144,7 +144,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
                                               Failing))));
       };
 
-    Because of = () =>
+    When of = () =>
       {
         Preparation.Visit(Report);
 
@@ -156,13 +156,13 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
           .Value;
       };
 
-    It should_replace_file_results_with_text_results =
+    Then should_replace_file_results_with_text_results =
       () => FirstSupplement.Keys.Each(x => x.ShouldStartWith("text-"));
 
-    It should_replace_file_results_with_text_results_where_the_original_key_is_prefixed_with__text__ =
+    Then should_replace_file_results_with_text_results_where_the_original_key_is_prefixed_with__text__ =
       () => FirstSupplement.Keys.Where(x => x.StartsWith("text-img-")).Count().ShouldEqual(2);
 
-    It should_replace_file_results_with_text_results_containing_the_error_message =
+    Then should_replace_file_results_with_text_results_containing_the_error_message =
       () => FirstSupplement
               .Where(x => x.Key.StartsWith("text-img-"))
               .Each(x => x.Value.ShouldStartWith(@"Failed to copy supplement C:\some\"));
@@ -176,7 +176,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Run Report;
     static IDictionary<string, string> FirstSupplement;
 
-    Establish context = () =>
+    Given context = () =>
       {
         var fileSystem = MockRepository.GenerateStub<IFileSystem>();
         fileSystem
@@ -202,7 +202,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
                                               Failing))));
       };
 
-    Because of = () =>
+    When of = () =>
       {
         Preparation.Visit(Report);
 
@@ -214,10 +214,10 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
           .Value;
       };
 
-    It should_succeed =
+    Then should_succeed =
       () => true.ShouldBeTrue();
 
-    It should_create_a_unique_error_key =
+    Then should_create_a_unique_error_key =
       () => FirstSupplement.Keys.ShouldContain("text-img-image-error-error-error");
   }
 }

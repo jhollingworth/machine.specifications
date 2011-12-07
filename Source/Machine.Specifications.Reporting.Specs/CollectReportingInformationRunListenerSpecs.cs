@@ -11,7 +11,7 @@ namespace Machine.Specifications.Reporting.Specs
     static DefaultRunner runner;
     static CollectReportingInformationRunListener reportListener;
 
-    Establish context = () =>
+    Given context = () =>
       {
         reportListener = new CollectReportingInformationRunListener();
 
@@ -19,9 +19,9 @@ namespace Machine.Specifications.Reporting.Specs
                                    new RunOptions(new[] { "behavior usage" }, new string[0], new string[0]));
       };
 
-    Because of = () => runner.RunAssembly(typeof(context_with_behaviors).Assembly);
+    When of = () => runner.RunAssembly(typeof(context_with_behaviors).Assembly);
 
-    It should_collect_behavior_specifications_and_context_specifications =
+    Then should_collect_behavior_specifications_and_context_specifications =
       () => reportListener.ResultsBySpecification.Count.ShouldEqual(3);
   }
 }

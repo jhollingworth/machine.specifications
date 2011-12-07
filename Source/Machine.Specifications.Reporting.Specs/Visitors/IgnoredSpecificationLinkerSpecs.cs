@@ -13,7 +13,7 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
     static Specification Second;
     static Specification Last;
 
-    Establish context = () =>
+    Given context = () =>
       {
         Linker = new IgnoredSpecificationLinker();
 
@@ -40,30 +40,30 @@ namespace Machine.Specifications.Reporting.Specs.Visitors
           );
       };
 
-    Because of = () => Linker.Visit(Report);
+    When of = () => Linker.Visit(Report);
 
-    It should_not_assign_a__previous__link_to_the_report =
+    Then should_not_assign_a__previous__link_to_the_report =
       () => Report.PreviousIgnored.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_report =
+    Then should_assign_a__next__link_to_the_report =
       () => Report.NextIgnored.ShouldEqual(First);
 
-    It should_assign_a__next__link_to_the_first_ignored_spec =
+    Then should_assign_a__next__link_to_the_first_ignored_spec =
       () => First.NextIgnored.ShouldEqual(Second);
 
-    It should_not_assign_a__previous__link_to_the_first_ignored_spec =
+    Then should_not_assign_a__previous__link_to_the_first_ignored_spec =
       () => First.PreviousIgnored.ShouldBeNull();
 
-    It should_assign_a__next__link_to_the_second_ignored_spec =
+    Then should_assign_a__next__link_to_the_second_ignored_spec =
       () => Second.NextIgnored.ShouldEqual(Last);
 
-    It should_assign_a__previous__link_to_the_second_ignored_spec =
+    Then should_assign_a__previous__link_to_the_second_ignored_spec =
       () => Second.PreviousIgnored.ShouldEqual(First);
 
-    It should_not_assign_a__next__link_to_the_last_ignored_spec =
+    Then should_not_assign_a__next__link_to_the_last_ignored_spec =
       () => Last.NextIgnored.ShouldBeNull();
 
-    It should_assign_a__previous__link_to_the_last_ignored_spec =
+    Then should_assign_a__previous__link_to_the_last_ignored_spec =
       () => Last.PreviousIgnored.ShouldEqual(Second);
   }
 }

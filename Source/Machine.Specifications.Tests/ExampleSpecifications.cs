@@ -8,13 +8,13 @@ namespace Machine.Specifications
     {
       public class InExampleB_1
       {
-        It is_spec_1 =()=> { };
+        Then is_spec_1 =()=> { };
         
       }
         
       public class InExampleB_2
       {
-        It is_spec_1 =()=> { };
+        Then is_spec_1 =()=> { };
         
       }
         
@@ -22,13 +22,13 @@ namespace Machine.Specifications
 
     public class InExampleA_1
     {
-      It is_spec_1 =()=> { };
+      Then is_spec_1 =()=> { };
       
     }
 
     public class InExampleA_2
     {
-      It is_spec_1 =()=> { };
+      Then is_spec_1 =()=> { };
     }
   }
 
@@ -36,8 +36,8 @@ namespace Machine.Specifications
   {
     public class InExampleC_1
     {
-      It is_spec_1 =()=> { };
-      It is_spec_2 =()=> { };
+      Then is_spec_1 =()=> { };
+      Then is_spec_2 =()=> { };
     }
 
     public class InExampleC_2
@@ -56,10 +56,10 @@ namespace Machine.Specifications
     public static bool ItInvoked;
     static Exception exception;
 
-    Because of =()=>
+    When of =()=>
       exception = null;
 
-    It should_throw_but_it_wont =()=> 
+    Then _shouldThrowButThenWont =()=> 
       exception.ShouldNotBeNull();
 
     public void Reset()
@@ -72,12 +72,12 @@ namespace Machine.Specifications
   {
     public static bool ItInvoked;
 
-    Because of =()=>
+    When of =()=>
     {
       throw new Exception();
     };
 
-    It should_fail =()=>
+    Then should_fail =()=>
     {
       ItInvoked = true;
     };
@@ -92,9 +92,9 @@ namespace Machine.Specifications
   {
     public static bool ItInvoked = false;
 
-    Because of;
+    When of;
 
-    It should_do_stuff =()=>
+    Then should_do_stuff =()=>
     {
       ItInvoked = true;
     };
@@ -112,22 +112,22 @@ namespace Machine.Specifications
     public static bool ItForWhen1Invoked = false;
     public static bool ItForWhen2Invoked = false;
 
-    Because _1 =()=>
+    When _1 =()=>
     {
       When1Invoked = true;
     };
 
-    It for_when_1 =()=>
+    Then for_when_1 =()=>
     {
       ItForWhen1Invoked = true;
     };
 
-    Because _2 =()=>
+    When _2 =()=>
     {
       When2Invoked = true;
     };
 
-    It for_when_2 =()=>
+    Then for_when_2 =()=>
     {
       ItForWhen2Invoked = true;
     };
@@ -145,12 +145,12 @@ namespace Machine.Specifications
   {
     public static bool WhenInvoked = false;
 
-    Because of =()=>
+    When of =()=>
     {
       WhenInvoked = true;
     };
 
-    It should_do_stuff;
+    Then should_do_stuff;
 
     public void Reset()
     {
@@ -163,13 +163,13 @@ namespace Machine.Specifications
     public static bool WhenInvoked = false;
     public static bool ItInvoked = false;
     public static Exception exception;
-    Because it_happens = () =>
+    When it_happens = () =>
     {
       WhenInvoked = true;
       exception = Catch.Exception(() => { throw new Exception(); });
     };
 
-    It should_throw_an_exception = () =>
+    Then should_throw_an_exception = () =>
     {
       ItInvoked = true;
     };
@@ -188,17 +188,17 @@ namespace Machine.Specifications
     public static bool ContextInvoked = false;
     public static bool CleanupInvoked = false;
 
-    Establish context =()=>
+    Given context =()=>
     {
       ContextInvoked = true;
     };
 
-    Because of = () =>
+    When of = () =>
     {
       BecauseInvoked = true;
     };
 
-    It is_a_specification = () =>
+    Then is_a_specification = () =>
     {
       ItInvoked = true;
     };
@@ -219,7 +219,7 @@ namespace Machine.Specifications
 
   public class ContextWithBadlyNamedBefore : IFakeContext
   {
-    Establish foo =()=>
+    Given foo =()=>
     {
       
     };
@@ -231,7 +231,7 @@ namespace Machine.Specifications
 
   public class ContextWithBadlyNamedAfter : IFakeContext
   {
-    Establish foo =()=>
+    Given foo =()=>
     {
       
     };

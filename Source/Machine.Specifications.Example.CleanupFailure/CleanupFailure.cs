@@ -8,7 +8,7 @@ namespace Machine.Specifications.Example.CleanupFailure
 {
   public class cleanup_failure
   {
-    It is_inevitable = () => { };
+    Then is_inevitable = () => { };
 
     Cleanup after = () => { throw new NonSerializableException(); };
   }

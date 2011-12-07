@@ -53,7 +53,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static ISparkRenderer Renderer;
     static string ReportPathUsed;
 
-    Establish context = () =>
+    Given context = () =>
       {
         ReportPath = @"C:\path\to\the\report.html";
         ResourceDirectory = @"C:\path\to\the\resources";
@@ -86,24 +86,24 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
                       });
       };
 
-    Because of = () => Generator.GenerateReport(Run);
+    When of = () => Generator.GenerateReport(Run);
 
-    It should_create_a_directory_for_the_report_resources =
+    Then should_create_a_directory_for_the_report_resources =
       () => FileSystem.AssertWasCalled(x => x.CreateOrOverwriteDirectory(ResourceDirectory));
 
-    It should_overwrite_existing_reports =
+    Then should_overwrite_existing_reports =
       () => FileSystem.AssertWasCalled(x => x.DeleteIfFileExists(Arg<string>.Is.Anything));
 
-    It should_create_a_report_file_as_specified =
+    Then should_create_a_report_file_as_specified =
       () => ReportPathUsed.ShouldEqual(ReportPath);
 
-    It should_render_one_report =
+    Then should_render_one_report =
       () => Renderer.AssertWasCalled(x => x.Render(Arg<Run>.Is.Equal(Run), Arg<TextWriter>.Is.NotNull));
 
-    It should_not_render_the_report_summary =
+    Then should_not_render_the_report_summary =
       () => Renderer.AssertWasNotCalled(x => x.RenderIndex(Arg<Run>.Is.Anything, Arg<TextWriter>.Is.Anything));
 
-    It should_not_link_the_report_to_the_summary =
+    Then should_not_link_the_report_to_the_summary =
       () => Renderer.AssertWasCalled(x => x.Render(Arg<Run>.Matches(y => y.Meta.ShouldGenerateIndexLink == false),
                                                    Arg<TextWriter>.Is.Anything));
   }
@@ -120,7 +120,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static ISparkRenderer Renderer;
     static IList<string> ReportPathsUsed;
 
-    Establish context = () =>
+    Given context = () =>
       {
         ReportDirectory = @"C:\path\to\the\report";
         ResourceDirectory = @"C:\path\to\the\report\resources";
@@ -155,33 +155,33 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
               };
       };
 
-    Because of = () => Generator.GenerateReport(Run);
+    When of = () => Generator.GenerateReport(Run);
 
-    It should_create_a_directory_for_the_report_resources =
+    Then should_create_a_directory_for_the_report_resources =
       () => FileSystem.AssertWasCalled(x => x.CreateOrOverwriteDirectory(ResourceDirectory));
 
-    It should_overwrite_existing_reports_and_summaries =
+    Then should_overwrite_existing_reports_and_summaries =
       () => FileSystem.AssertWasCalled(x => x.DeleteIfFileExists(Arg<string>.Is.Anything),
                                        o => o.Repeat.Times(Run.Assemblies.Count() + 1));
 
-    It should_create_a_reports_in_the_report_directory =
+    Then should_create_a_reports_in_the_report_directory =
       () => ReportPathsUsed.Each(x => x.ShouldStartWith(ReportDirectory));
 
-    It should_render_one_report_for_every_assembly_that_was_run =
+    Then should_render_one_report_for_every_assembly_that_was_run =
       () => Renderer.AssertWasCalled(x => x.Render(Arg<Run>.Matches(y => y.Assemblies.Count() == 1),
                                                    Arg<TextWriter>.Is.NotNull),
                                      o => o.Repeat.Times(Run.Assemblies.Count()));
 
-    It should_link_the_assembly_reports_to_the_summary =
+    Then should_link_the_assembly_reports_to_the_summary =
       () => Renderer.AssertWasCalled(x => x.Render(Arg<Run>.Matches(y => y.Meta.ShouldGenerateIndexLink &&
                                                                          y.Meta.IndexLink == "index.html"),
                                                    Arg<TextWriter>.Is.Anything),
                                      o => o.Repeat.Times(Run.Assemblies.Count()));
 
-    It should_render_the_report_summary =
+    Then should_render_the_report_summary =
       () => Renderer.AssertWasCalled(x => x.RenderIndex(Arg<Run>.Is.Same(Run), Arg<TextWriter>.Is.NotNull));
 
-    It should_not_link_the_summary_to_itself =
+    Then should_not_link_the_summary_to_itself =
       () => Renderer.AssertWasCalled(x => x.RenderIndex(Arg<Run>.Matches(y => y.Meta.ShouldGenerateIndexLink == false),
                                                         Arg<TextWriter>.Is.Anything));
   }
@@ -195,7 +195,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static string ReportPath;
     static ISparkRenderer Renderer;
 
-    Establish context = () =>
+    Given context = () =>
       {
         ReportPath = @"C:\path\to\the\report.html";
 
@@ -220,9 +220,9 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
                       });
       };
 
-    Because of = () => Generator.GenerateReport(Run);
+    When of = () => Generator.GenerateReport(Run);
 
-    It should_render_the_report_with_time_info =
+    Then should_render_the_report_with_time_info =
       () => Renderer.AssertWasCalled(x => x.Render(Arg<Run>.Matches(y => y.Meta.ShouldGenerateTimeInfo),
                                                    Arg<TextWriter>.Is.Anything));
   }
@@ -237,7 +237,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static ISparkRenderer Renderer;
     static ISpecificationVisitor[] Visitors;
 
-    Establish context = () =>
+    Given context = () =>
       {
         ReportPath = @"C:\path\to\the\report.html";
 
@@ -268,12 +268,12 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
                       });
       };
 
-    Because of = () => Generator.GenerateReport(Run);
+    When of = () => Generator.GenerateReport(Run);
 
-    It should_initialize_all_visitors =
+    Then should_initialize_all_visitors =
       () => Visitors.Each(v => v.AssertWasCalled(x => x.Initialize(Arg<VisitorContext>.Is.NotNull)));
 
-    It should_enrich_the_report_using_all_visitors =
+    Then should_enrich_the_report_using_all_visitors =
       () => Visitors.Each(v => v.AssertWasCalled(x => x.Visit(Run)));
   }
 
@@ -287,7 +287,7 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
     static ISparkRenderer Renderer;
     static ISpecificationVisitor[] Visitors;
 
-    Establish context = () =>
+    Given context = () =>
       {
         ReportPath = @"C:\path\to\the\report.html";
 
@@ -321,13 +321,13 @@ namespace Machine.Specifications.Reporting.Specs.Generation.Spark
                       });
       };
 
-    Because of = () => Generator.GenerateReport(Run);
+    When of = () => Generator.GenerateReport(Run);
 
-    It should_initialize_all_visitors_for_each_assembly_report_and_the_index =
+    Then should_initialize_all_visitors_for_each_assembly_report_and_the_index =
       () => Visitors.Each(v => v.AssertWasCalled(x => x.Initialize(Arg<VisitorContext>.Is.NotNull),
                                                  o => o.Repeat.Times(Run.TotalAssemblies + 1)));
 
-    It should_enrich_all_reports_and_the_index_using_all_visitors =
+    Then should_enrich_all_reports_and_the_index_using_all_visitors =
       () => Visitors.Each(v => v.AssertWasCalled(x => x.Visit(Arg<Run>.Is.NotNull),
                                                  o => o.Repeat.Times(Run.TotalAssemblies + 1)));
   }

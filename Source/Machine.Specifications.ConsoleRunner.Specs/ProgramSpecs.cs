@@ -13,10 +13,10 @@ namespace Machine.Specifications.ConsoleRunner.Specs
   public class when_arguments_are_not_provided
     : ConsoleRunnerSpecs 
   {
-    Because of = ()=>
+    When of = ()=>
       program.Run(new string[] {});
 
-    It should_print_usage_statement = ()=>
+    Then should_print_usage_statement = ()=>
       console.Lines.ShouldContain(Options.Usage());
   }
 
@@ -24,31 +24,31 @@ namespace Machine.Specifications.ConsoleRunner.Specs
   public class when_running_a_specification_assembly
     : ConsoleRunnerSpecs 
   {
-    Because of = ()=>
+    When of = ()=>
       program.Run(new [] {GetPath("Machine.Specifications.Example.dll")});
 
-    It should_write_the_assembly_name = ()=>
+    Then should_write_the_assembly_name = ()=>
       console.ShouldContainLineWith("Machine.Specifications.Example");
 
-    It should_write_the_specifications = ()=>
+    Then should_write_the_specifications = ()=>
       console.Lines.ShouldContain(
         "» should debit the from account by the amount transferred", 
         "» should credit the to account by the amount transferred", 
         "» should not allow the transfer");
 
-    It should_write_the_contexts = ()=>
+    Then should_write_the_contexts = ()=>
       console.Lines.ShouldContain(
         "Account Funds transfer, when transferring between two accounts",
         "Account Funds transfer, when transferring an amount larger than the balance of the from account"
         );
 
-    It should_write_the_count_of_contexts = ()=>
+    Then should_write_the_count_of_contexts = ()=>
       console.ShouldContainLineWith("Contexts: 3");
 
-    It should_write_the_count_of_specifications = ()=>
+    Then should_write_the_count_of_specifications = ()=>
       console.ShouldContainLineWith("Specifications: 6");
     
-    It should_write_the_run_time = ()=>
+    Then should_write_the_run_time = ()=>
       console.ShouldContainLineWith("Time: ");
   }
 
@@ -59,13 +59,13 @@ namespace Machine.Specifications.ConsoleRunner.Specs
     const string missingAssemblyName = "Some.Missing.Assembly.dll";
     public static ExitCode exitCode;
 
-    Because of = ()=>
+    When of = ()=>
       exitCode = program.Run(new string[] {missingAssemblyName});
 
-    It should_output_an_error_message_with_the_name_of_the_missing_assembly = ()=>
+    Then should_output_an_error_message_with_the_name_of_the_missing_assembly = ()=>
       console.Lines.ShouldContain(string.Format(Resources.MissingAssemblyError, missingAssemblyName));
 
-    It should_return_the_Error_exit_code = ()=>
+    Then should_return_the_Error_exit_code = ()=>
       exitCode.ShouldEqual(ExitCode.Error);
   }
 
@@ -76,16 +76,16 @@ namespace Machine.Specifications.ConsoleRunner.Specs
     const string assemblyWithFailingSpecification = "Machine.Specifications.FailingExample";
     const string failingSpecificationName = "should fail";
 
-    Because of = ()=>
+    When of = ()=>
       exitCode = program.Run(new string[] {GetPath(assemblyWithFailingSpecification + ".dll")});
 
-    It should_write_the_failure = ()=>
+    Then should_write_the_failure = ()=>
       console.ShouldContainLineWith("Exception");
 
-    It should_write_the_count_of_failed_specifications = ()=>
+    Then should_write_the_count_of_failed_specifications = ()=>
       console.ShouldContainLineWith("1 failed");
 
-    It should_return_the_Failure_exit_code = ()=>
+    Then should_return_the_Failure_exit_code = ()=>
       exitCode.ShouldEqual(ExitCode.Failure);
   }
 
@@ -96,42 +96,42 @@ namespace Machine.Specifications.ConsoleRunner.Specs
     const string assemblyWithFailingSpecification = "Machine.Specifications.FailingExample";
     const string failingSpecificationName = "should fail";
 
-    Because of = ()=>
+    When of = ()=>
       exitCode = program.Run(new string[] { GetPath(assemblyWithFailingSpecification + ".dll"), "-s"});
 
-    It should_write_the_count_of_failed_specifications = ()=>
+    Then should_write_the_count_of_failed_specifications = ()=>
       console.ShouldContainLineWith("1 failed");
 
-    It should_return_the_Failure_exit_code = ()=>
+    Then should_return_the_Failure_exit_code = ()=>
       exitCode.ShouldEqual(ExitCode.Failure);
   }
 
   [Subject("Console runner")]
   public class when_specifying_an_include_filter : ConsoleRunnerSpecs
   {
-    Because of = ()=>
+    When of = ()=>
       program.Run(new [] { GetPath("Machine.Specifications.Example.dll"), "--include", "failure"});
 
-    It should_execute_specs_with_the_included_tag = () =>
+    Then should_execute_specs_with_the_included_tag = () =>
       console.ShouldContainLineWith(
         "Account Funds transfer, when transferring an amount larger than the balance of the from account");
 
-    It should_not_execute_specs_that_are_not_included = () =>
+    Then should_not_execute_specs_that_are_not_included = () =>
       console.ShouldNotContainLineWith("Account Funds transfer, when transferring between two accounts");
   }
 
   [Subject("Console runner")]
   public class when_running_from_directory_different_from_assembly_location : ConsoleRunnerSpecs
   {
-    Because of = () =>
+    When of = () =>
       program.Run(new[] { GetPath(@"ExternalFile\Machine.Specifications.Example.UsingExternalFile.dll") });
 
-    It should_pass_the_specification_which_depends_on_external_file = () =>
+    Then should_pass_the_specification_which_depends_on_external_file = () =>
       console.Lines.ShouldContain(
         "External resources usage, when using file copied to assembly output directory", 
         "» should be able to locate it by relative path");
 
-    It should_pass_all_specifications = () =>
+    Then should_pass_all_specifications = () =>
       console.ShouldNotContainLineWith("failed");
   }
 
@@ -143,7 +143,7 @@ namespace Machine.Specifications.ConsoleRunner.Specs
     public static Program program;
     public static FakeConsole console;
 
-    Establish context = () =>
+    Given context = () =>
     {
       console = new FakeConsole();
       program = new Program(console);

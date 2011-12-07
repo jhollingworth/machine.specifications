@@ -4,7 +4,7 @@
   [Tags(tag.example)]
   class when_a_context_is_internal
   {
-    It should_work =
+    Then should_work =
       () => true.ShouldBeTrue();
   }
 
@@ -14,7 +14,7 @@
   {
     protected static bool MSpecRocks = true;
 
-    Because of = () => { MSpecRocks = true; };
+    When of = () => { MSpecRocks = true; };
 
     Behaves_like<WorkingSpecs> a_working_spec;
   }
@@ -24,7 +24,7 @@
   {
     protected static bool MSpecRocks;
 
-    It should_work =
+    Then should_work =
       () => MSpecRocks.ShouldBeTrue();
   }
 }

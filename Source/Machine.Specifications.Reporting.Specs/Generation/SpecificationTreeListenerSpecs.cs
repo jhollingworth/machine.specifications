@@ -13,25 +13,25 @@ namespace Machine.Specifications.Reporting.Specs.Generation
     static DefaultRunner runner;
     static SpecificationTreeListener listener;
 
-    Establish context = () =>
+    Given context = () =>
       {
         listener = new SpecificationTreeListener();
         runner = new DefaultRunner(listener, RunOptions.Default);
       };
 
-    Because of =
+    When of =
       () => runner.RunAssembly(typeof(when_a_customer_first_views_the_account_summary_page).Assembly);
 
-    It should_set_the_total_specifications =
+    Then should_set_the_total_specifications =
       () => listener.Run.TotalSpecifications.ShouldEqual(6);
 
-    It should_set_the_report_generation_date =
+    Then should_set_the_report_generation_date =
       () => DateTime.Now.AddSeconds(-5).ShouldBeLessThan(listener.Run.Meta.GeneratedAt);
     
-    It should_default_to_no_timestamp =
+    Then should_default_to_no_timestamp =
       () => listener.Run.Meta.ShouldGenerateTimeInfo.ShouldBeFalse();
     
-    It should_default_to_no_link_to_the_summary =
+    Then should_default_to_no_link_to_the_summary =
       () => listener.Run.Meta.ShouldGenerateIndexLink.ShouldBeFalse();
   }
 }
